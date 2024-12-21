@@ -1,4 +1,3 @@
-version: '3'
 services:
   gym_db_dev:
     image: mysql:8.0.33
@@ -12,4 +11,4 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 10s
-      retries: 10s
+      retries: 10

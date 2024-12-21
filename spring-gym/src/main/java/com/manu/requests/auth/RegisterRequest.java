@@ -1,10 +1,5 @@
 package com.manu.requests.auth;
 
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
 public class RegisterRequest {
 
   private String name;
@@ -13,4 +8,28 @@ public class RegisterRequest {
   private int age;
   private int weight;
   private int goal;
+
+  public String getName() {
+    return name;
+  }
+
+  public int getGoal() {
+    return goal;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public String getEmail() {
+    return email;
+  }
 }

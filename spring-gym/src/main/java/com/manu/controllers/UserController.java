@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<Object> getAllUsers(){
-        var response = userService.getAllUsers();
-        return ResponseEntity.status(response.getStatusCode()).body(
-                response.getStatusCode() == 200 ? response.getContent() : response.getMessage()
-        );
-    }
-
+  @GetMapping
+  public ResponseEntity<Object> getAllUsers() {
+    var response = userService.getAllUsers();
+    return ResponseEntity.status(response.getStatusCode())
+        .body(response.getStatusCode() == 200 ? response.getContent() : response.getMessage());
+  }
 }
