@@ -9,6 +9,16 @@ public class RegisterRequest {
   private int weight;
   private int goal;
 
+  public RegisterRequest(
+      String name, String email, String password, int age, int weight, int goal) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.age = age;
+    this.weight = weight;
+    this.goal = goal;
+  }
+
   public String getName() {
     return name;
   }
