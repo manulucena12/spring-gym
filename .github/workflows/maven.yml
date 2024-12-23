@@ -18,8 +18,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build Maven
+        working-directory: spring-gym
         run: mvn clean install
       - name: Check code structure
+        working-directory: spring-gym
         run: mvn spotless:check
       - name: Testing with Maven
+        working-directory: spring-gym
         run: mvn test
