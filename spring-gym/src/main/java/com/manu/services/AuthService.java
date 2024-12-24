@@ -1,10 +1,13 @@
 package com.manu.services;
 
+import com.manu.entities.RoutineEntity;
 import com.manu.entities.UserEntity;
+import com.manu.repositories.RoutineRepository;
 import com.manu.repositories.UserRepository;
 import com.manu.requests.auth.LoginRequest;
 import com.manu.requests.auth.RegisterRequest;
 import com.manu.responses.HttpServiceResponse;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +21,8 @@ public class AuthService {
 
   @Autowired UserRepository userRepository;
 
+  @Autowired RoutineRepository routineRepository;
+
   @Autowired PasswordEncoder passwordEncoder;
 
   @Autowired JwtService jwtService;
@@ -30,6 +35,10 @@ public class AuthService {
         return new HttpServiceResponse<>(
             400, null, "This email has already been registered, use another one");
       }
+      if (body.getDays() == 0) {
+        return new HttpServiceResponse<>(
+            400, null, "You have to set a minimum days greater than 0");
+      }
       UserEntity newUser =
           new UserEntity(
               body.getName(),
@@ -40,8 +49,16 @@ public class AuthService {
               body.getGoal(),
               body.getWeight());
       var user = userRepository.save(newUser);
+      var newRoutine =
+          new RoutineEntity(
+              user.getId(), body.getDays(), new Date().toString(), new Date().toString());
+      System.out.println(user.getId());
+      System.out.println(body.getDays());
+      routineRepository.save(newRoutine);
       return new HttpServiceResponse<>(
-          201, "Bearer " + jwtService.createToken(user.getEmail(), user.getRole()), null);
+          201,
+          "Bearer " + jwtService.createToken(user.getEmail(), user.getRole(), user.getId()),
+          null);
     } catch (Exception e) {
       if (e instanceof DataIntegrityViolationException) {
         return new HttpServiceResponse<>(400, null, "Insufficient data to register");
@@ -60,7 +77,10 @@ public class AuthService {
         return new HttpServiceResponse<>(400, null, "Bad credentials");
       }
       return new HttpServiceResponse<>(
-          200, "Bearer " + jwtService.createToken(body.getEmail(), user.get().getRole()), null);
+          200,
+          "Bearer "
+              + jwtService.createToken(body.getEmail(), user.get().getRole(), user.get().getId()),
+          null);
     } catch (Exception e) {
       if (e instanceof BadCredentialsException) {
         return new HttpServiceResponse<>(400, null, "Bad credentials");

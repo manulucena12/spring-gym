@@ -8,15 +8,17 @@ public class RegisterRequest {
   private int age;
   private int weight;
   private int goal;
+  private int days;
 
   public RegisterRequest(
-      String name, String email, String password, int age, int weight, int goal) {
+      String name, String email, String password, int age, int weight, int goal, int days) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.age = age;
     this.weight = weight;
     this.goal = goal;
+    this.days = days;
   }
 
   public String getName() {
@@ -41,5 +43,9 @@ public class RegisterRequest {
 
   public String getEmail() {
     return email;
+  }
+
+  public int getDays() {
+    return days;
   }
 }

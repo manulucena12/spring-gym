@@ -20,8 +20,7 @@ public class AuthTests {
   @DisplayName("Creating a user for the first time works properly")
   @Test
   void registerTest() {
-    var newUser = new RegisterRequest("John Doe", "johndoe@gmail.com", "1234", 40, 70, 65);
-    ;
+    var newUser = new RegisterRequest("John Doe", "johndoe@gmail.com", "1234", 40, 70, 65, 5);
     webTestClient
         .post()
         .uri("/auth/register")
@@ -35,7 +34,7 @@ public class AuthTests {
   @DisplayName("Registering with an existing email is forbidden")
   @Test
   void registerForbiddenTest() {
-    var newUser = new RegisterRequest("John Doe", "johndoe@gmail.com", "1234", 40, 70, 65);
+    var newUser = new RegisterRequest("John Doe", "johndoe@gmail.com", "1234", 40, 70, 65, 5);
     System.out.println(userRepository.findByEmail("johndoe@gmail.com").get().getPassword());
     webTestClient
         .post()
@@ -52,7 +51,7 @@ public class AuthTests {
   @DisplayName("Creating a user without enough is not permitted")
   @Test
   void insufficientRegisterTest() {
-    var newUser = new RegisterRequest(null, null, "1234", 40, 70, 65);
+    var newUser = new RegisterRequest(null, null, "1234", 40, 70, 65, 5);
     ;
     webTestClient
         .post()
@@ -69,7 +68,7 @@ public class AuthTests {
   @DisplayName("Login once a user has been created works properly")
   @Test
   void loginTest() {
-    var newUser = new RegisterRequest("John Doe2", "johndoe2@gmail.com", "1234", 40, 70, 65);
+    var newUser = new RegisterRequest("John Doe2", "johndoe2@gmail.com", "1234", 40, 70, 65, 5);
     webTestClient
         .post()
         .uri("/auth/register")

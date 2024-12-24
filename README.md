@@ -1,0 +1,1 @@
+[![Spring Gym CI](https://github.com/manulucena12/spring-gym/actions/workflows/maven.yml/badge.svg)](https://github.com/manulucena12/spring-gym/actions/workflows/maven.yml)
