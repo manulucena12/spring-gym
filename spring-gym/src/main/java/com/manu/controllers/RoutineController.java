@@ -1,12 +1,11 @@
 package com.manu.controllers;
 
+import com.manu.requests.routine.UpdateRoutineRequest;
 import com.manu.services.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/routine")
@@ -19,5 +18,12 @@ public class RoutineController {
     var response = routineService.getUserRoutine(id);
     return ResponseEntity.status(response.getStatusCode())
         .body(response.getMessage() == null ? response.getContent() : response.getMessage());
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Object> updatePersonalRoutine(
+      @PathVariable Long id, @RequestBody UpdateRoutineRequest request) {
+    var response = routineService.updateUserRoutine(id, request);
+    return ResponseEntity.status(response.getStatusCode()).body(response.getMessage());
   }
 }
