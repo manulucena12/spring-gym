@@ -1,6 +1,7 @@
 package com.manu.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "routines")
@@ -21,6 +22,9 @@ public class RoutineEntity {
 
   @Column(name = "updated", nullable = false)
   private String updated;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "routine")
+  private List<DayEntity> plan;
 
   public Long getId() {
     return id;
@@ -56,6 +60,14 @@ public class RoutineEntity {
 
   public Long getOwner() {
     return owner;
+  }
+
+  public List<DayEntity> getPlan() {
+    return plan;
+  }
+
+  public void setPlan(List<DayEntity> plan) {
+    this.plan = plan;
   }
 
   public void setUser(Long owner) {

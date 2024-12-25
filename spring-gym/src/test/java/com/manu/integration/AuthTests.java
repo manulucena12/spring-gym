@@ -1,6 +1,5 @@
 package com.manu.integration;
 
-import com.manu.repositories.UserRepository;
 import com.manu.requests.auth.LoginRequest;
 import com.manu.requests.auth.RegisterRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +13,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 public class AuthTests {
 
   @Autowired private WebTestClient webTestClient;
-
-  @Autowired private UserRepository userRepository;
 
   @DisplayName("Creating a user for the first time works properly")
   @Test
@@ -35,7 +32,6 @@ public class AuthTests {
   @Test
   void registerForbiddenTest() {
     var newUser = new RegisterRequest("John Doe", "johndoe@gmail.com", "1234", 40, 70, 65, 5);
-    System.out.println(userRepository.findByEmail("johndoe@gmail.com").get().getPassword());
     webTestClient
         .post()
         .uri("/auth/register")
@@ -52,7 +48,6 @@ public class AuthTests {
   @Test
   void insufficientRegisterTest() {
     var newUser = new RegisterRequest(null, null, "1234", 40, 70, 65, 5);
-    ;
     webTestClient
         .post()
         .uri("/auth/register")

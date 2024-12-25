@@ -1,7 +1,9 @@
 package com.manu.services;
 
+import com.manu.entities.DayEntity;
 import com.manu.entities.RoutineEntity;
 import com.manu.entities.UserEntity;
+import com.manu.repositories.DayRepository;
 import com.manu.repositories.RoutineRepository;
 import com.manu.repositories.UserRepository;
 import com.manu.requests.auth.LoginRequest;
@@ -22,6 +24,8 @@ public class AuthService {
   @Autowired UserRepository userRepository;
 
   @Autowired RoutineRepository routineRepository;
+
+  @Autowired private DayRepository dayRepository;
 
   @Autowired PasswordEncoder passwordEncoder;
 
@@ -52,9 +56,12 @@ public class AuthService {
       var newRoutine =
           new RoutineEntity(
               user.getId(), body.getDays(), new Date().toString(), new Date().toString());
-      System.out.println(user.getId());
-      System.out.println(body.getDays());
-      routineRepository.save(newRoutine);
+      var routine = routineRepository.save(newRoutine);
+      var routineId = routine.getId();
+      for (int i = 0; i < body.getDays(); i++) {
+        var newDay = new DayEntity(routine, "Undefined", "Unnamed Workout");
+        dayRepository.save(newDay);
+      }
       return new HttpServiceResponse<>(
           201,
           "Bearer " + jwtService.createToken(user.getEmail(), user.getRole(), user.getId()),

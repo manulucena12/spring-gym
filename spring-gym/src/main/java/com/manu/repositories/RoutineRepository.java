@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoutineRepository extends JpaRepository<RoutineEntity, Long> {
-  @Query(nativeQuery = true, value = "SELECT * FROM routines WHERE user = ?1")
+  @Query(nativeQuery = true, value = "SELECT * FROM routines WHERE owner = ?1")
   Optional<RoutineEntity> findByOwner(Long id);
 }
