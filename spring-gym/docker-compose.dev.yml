@@ -12,3 +12,5 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+    volumes:
+      - "./mysql:/var/lib/mysql"

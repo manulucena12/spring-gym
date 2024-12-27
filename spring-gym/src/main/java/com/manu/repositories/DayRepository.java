@@ -11,4 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface DayRepository extends JpaRepository<DayEntity, Long> {
   @Query(nativeQuery = true, value = "SELECT * FROM days WHERE routine = ?1")
   Optional<List<DayEntity>> findByRoutine(Long routineId);
+
+  @Query(
+      nativeQuery = true,
+      value =
+          "SELECT owner FROM routines INNER JOIN days ON routines.id = days.routine WHERE days.id = ?1")
+  Optional<Long> findOwnerById(Long id);
 }

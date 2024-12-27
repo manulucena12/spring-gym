@@ -69,9 +69,8 @@ public class RoutineService {
       if (!dayRepository.existsById(body.getId().get())) {
         return new HttpServiceResponse<>(400, null, "Day not found");
       }
-      if (!routineUtils.quitDayFromRoutine(routine, body.getId().get())) {
-        return new HttpServiceResponse<>(
-            400, null, "You must have at least one day in your routine");
+      if (!routineUtils.quitDayFromRoutine(routine, body.getId().get(), id)) {
+        return new HttpServiceResponse<>(400, null, "Not found");
       }
       return new HttpServiceResponse<>(200, null, "Day eliminated successfully from your routine");
     } catch (Exception e) {

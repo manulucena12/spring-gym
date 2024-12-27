@@ -21,4 +21,9 @@ public class UpdateRoutineRequest {
   public void setId(Optional<Long> id) {
     this.id = id;
   }
+
+  public UpdateRoutineRequest(int days, Optional<Long> id) {
+    this.days = days;
+    this.id = id;
+  }
 }

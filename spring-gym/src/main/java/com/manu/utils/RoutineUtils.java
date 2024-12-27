@@ -2,6 +2,7 @@ package com.manu.utils;
 
 import com.manu.entities.DayEntity;
 import com.manu.entities.RoutineEntity;
+import com.manu.exceptions.DayNotFoundException;
 import com.manu.repositories.DayRepository;
 import com.manu.repositories.RoutineRepository;
 import java.util.Date;
@@ -27,8 +28,16 @@ public class RoutineUtils {
     return true;
   }
 
-  public boolean quitDayFromRoutine(RoutineEntity routine, Long dayId) {
+  public boolean quitDayFromRoutine(RoutineEntity routine, Long dayId, Long userId) {
     if (routine.getDays() == 1) {
+      return false;
+    }
+    if (!dayRepository.existsById(dayId)) {
+      return false;
+    }
+    var owner =
+        dayRepository.findOwnerById(dayId).orElseThrow(() -> new DayNotFoundException("Not found"));
+    if (owner != userId) {
       return false;
     }
     dayRepository.deleteById(dayId);
