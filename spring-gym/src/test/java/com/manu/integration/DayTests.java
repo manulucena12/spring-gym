@@ -61,7 +61,7 @@ public class DayTests {
             .expectStatus()
             .isOk()
             .returnResult(RoutineEntity.class);
-    dayId = response2.getResponseBody().blockFirst().getPlan().get(0).getId();
+    dayId = response2.getResponseBody().blockFirst().getPlan().get(1).getId();
   }
 
   @DisplayName("Getting a day works properly")
@@ -81,11 +81,13 @@ public class DayTests {
   void getNonOwnedDayTest() {
     webTestClient
         .get()
-        .uri("/days/" + (dayId - 1L))
+        .uri("/days/" + (40L))
         .header("Authorization", userToken)
         .exchange()
         .expectStatus()
-        .isUnauthorized();
+        .isBadRequest()
+        .expectBody(String.class)
+        .isEqualTo("Day not found");
   }
 
   @DisplayName("Updating a day works properly")
