@@ -6,6 +6,7 @@ import com.manu.exceptions.DayNotFoundException;
 import com.manu.repositories.DayRepository;
 import com.manu.repositories.RoutineRepository;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class RoutineUtils {
       return false;
     }
     for (int i = 0; i < days; i++) {
-      dayRepository.save(new DayEntity(routine, "Undefined", "Unnamed Workout"));
+      dayRepository.save(new DayEntity(routine, "Undefined", "Unnamed Workout", List.of()));
     }
     int newDays = routine.getDays() + days;
     routineRepository.updateById(newDays, new Date().toString(), routine.getId());

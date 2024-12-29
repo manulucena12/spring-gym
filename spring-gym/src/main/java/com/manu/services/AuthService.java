@@ -10,6 +10,7 @@ import com.manu.requests.auth.LoginRequest;
 import com.manu.requests.auth.RegisterRequest;
 import com.manu.responses.HttpServiceResponse;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,7 +60,7 @@ public class AuthService {
       var routine = routineRepository.save(newRoutine);
       var routineId = routine.getId();
       for (int i = 0; i < body.getDays(); i++) {
-        var newDay = new DayEntity(routine, "Undefined", "Unnamed Workout");
+        var newDay = new DayEntity(routine, "Undefined", "Unnamed Workout", List.of());
         dayRepository.save(newDay);
       }
       return new HttpServiceResponse<>(

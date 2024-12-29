@@ -2,6 +2,7 @@ package com.manu.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "days")
@@ -22,10 +23,23 @@ public class DayEntity {
   @Column(name = "name", nullable = false)
   private String name;
 
-  public DayEntity(RoutineEntity routine, String weekDay, String name) {
+  public List<ExerciseEntity> getExercises() {
+    return exercises;
+  }
+
+  public void setExercises(List<ExerciseEntity> exercises) {
+    this.exercises = exercises;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "day")
+  private List<ExerciseEntity> exercises;
+
+  public DayEntity(
+      RoutineEntity routine, String weekDay, String name, List<ExerciseEntity> exercises) {
     this.routine = routine;
     this.weekDay = weekDay;
     this.name = name;
+    this.exercises = exercises;
   }
 
   public DayEntity() {}
