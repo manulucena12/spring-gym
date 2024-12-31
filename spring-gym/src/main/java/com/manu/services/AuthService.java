@@ -55,8 +55,7 @@ public class AuthService {
               body.getWeight());
       var user = userRepository.save(newUser);
       var newRoutine =
-          new RoutineEntity(
-              user.getId(), body.getDays(), new Date().toString(), new Date().toString());
+          new RoutineEntity(user.getId(), body.getDays(), new Date().toString(), "Not yet");
       var routine = routineRepository.save(newRoutine);
       var routineId = routine.getId();
       for (int i = 0; i < body.getDays(); i++) {
