@@ -3,9 +3,11 @@ package com.manu.services;
 import com.manu.entities.DayEntity;
 import com.manu.entities.RoutineEntity;
 import com.manu.entities.UserEntity;
+import com.manu.entities.WeightEntity;
 import com.manu.repositories.DayRepository;
 import com.manu.repositories.RoutineRepository;
 import com.manu.repositories.UserRepository;
+import com.manu.repositories.WeightRepository;
 import com.manu.requests.auth.LoginRequest;
 import com.manu.requests.auth.RegisterRequest;
 import com.manu.responses.HttpServiceResponse;
@@ -27,6 +29,8 @@ public class AuthService {
   @Autowired RoutineRepository routineRepository;
 
   @Autowired private DayRepository dayRepository;
+
+  @Autowired private WeightRepository weightRepository;
 
   @Autowired PasswordEncoder passwordEncoder;
 
@@ -57,11 +61,12 @@ public class AuthService {
       var newRoutine =
           new RoutineEntity(user.getId(), body.getDays(), new Date().toString(), "Not yet");
       var routine = routineRepository.save(newRoutine);
-      var routineId = routine.getId();
       for (int i = 0; i < body.getDays(); i++) {
         var newDay = new DayEntity(routine, "Undefined", "Unnamed Workout", List.of());
         dayRepository.save(newDay);
       }
+      weightRepository.save(
+          new WeightEntity(body.getWeight(), user.getId(), new Date().toString(), "Not yet"));
       return new HttpServiceResponse<>(
           201,
           "Bearer " + jwtService.createToken(user.getEmail(), user.getRole(), user.getId()),

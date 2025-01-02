@@ -6,12 +6,12 @@ public class RegisterRequest {
   private String email;
   private String password;
   private int age;
-  private int weight;
+  private double weight;
   private int goal;
   private int days;
 
   public RegisterRequest(
-      String name, String email, String password, int age, int weight, int goal, int days) {
+      String name, String email, String password, int age, double weight, int goal, int days) {
     this.name = name;
     this.email = email;
     this.password = password;
@@ -29,7 +29,7 @@ public class RegisterRequest {
     return goal;
   }
 
-  public int getWeight() {
+  public double getWeight() {
     return weight;
   }
 

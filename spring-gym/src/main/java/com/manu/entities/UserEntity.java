@@ -27,8 +27,8 @@ public class UserEntity implements UserDetails {
   @Column(name = "age", nullable = true)
   private int age;
 
-  @Column(name = "weight", nullable = true)
-  private int weight;
+  @Column(name = "weight", nullable = false)
+  private double weight;
 
   @Column(name = "goal", nullable = false)
   private int goal;
@@ -39,7 +39,7 @@ public class UserEntity implements UserDetails {
   public UserEntity() {}
 
   public UserEntity(
-      String name, String password, String email, int age, String role, int goal, int weight) {
+      String name, String password, String email, int age, String role, int goal, double weight) {
     this.name = name;
     this.password = password;
     this.email = email;
@@ -120,11 +120,11 @@ public class UserEntity implements UserDetails {
     this.age = age;
   }
 
-  public int getWeight() {
+  public double getWeight() {
     return weight;
   }
 
-  public void setWeight(int weight) {
+  public void setWeight(double weight) {
     this.weight = weight;
   }
 
