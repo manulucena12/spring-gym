@@ -24,3 +24,4 @@ This project is built using the following technologies and tools:
 - **WebTestClient + WebFlux**: Reactive programming and testing tools for efficient API validation.
 - **MySQL + H2**: Databases for production (MySQL) and testing (H2) environments.
 - **Docker**: Containers to create a consistent and isolated development environment.
+- **Swagger**: OpenAPI documentation for code.

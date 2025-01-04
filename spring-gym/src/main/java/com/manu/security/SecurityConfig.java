@@ -31,7 +31,21 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             config -> {
-              config.requestMatchers("/auth/**").permitAll().anyRequest().authenticated();
+              config
+                  .requestMatchers("/auth/**")
+                  .permitAll()
+                  .requestMatchers(
+                      "/swagger-ui/**",
+                      "/configurations/ui",
+                      "/configurations/security",
+                      "/swagger-ui.html",
+                      "/swagger-resources/**",
+                      "/swagger-resources",
+                      "/v3/api-docs",
+                      "/v3/api-docs/**")
+                  .permitAll()
+                  .anyRequest()
+                  .authenticated();
             })
         .authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
